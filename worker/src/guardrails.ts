@@ -28,8 +28,11 @@ export function isProtectedPath(file: string, patterns: string[]): boolean {
 
 export type GuardrailResult = { ok: true } | { ok: false; reason: string };
 
-export function checkClone(cloneDir: string): GuardrailResult {
-  const patterns = loadProtectedPatterns(cloneDir);
+export function checkClone(
+  cloneDir: string,
+  extraPatterns: string[] = [],
+): GuardrailResult {
+  const patterns = [...loadProtectedPatterns(cloneDir), ...extraPatterns];
   const changed = git(cloneDir, ["diff", "--name-only", "origin/main...HEAD"])
     .split("\n")
     .filter(Boolean);

@@ -1,6 +1,5 @@
 // One build: clone the repo, let the Claude agent implement the issue's spec
 // under guardrails, verify locally, push a branch, and open a PR.
-import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { isAbsolute, join, relative } from "node:path";
@@ -11,15 +10,12 @@ import {
 import { config } from "./config.js";
 import { cloneUrl, getGitToken, openPullRequest, type WorkIssue } from "./github.js";
 import { checkClone, isProtectedPath, loadProtectedPatterns } from "./guardrails.js";
+import { sh } from "./shell.js";
 
-function sh(cwd: string, cmd: string, args: string[]): string {
-  return execFileSync(cmd, args, {
-    cwd,
-    encoding: "utf8",
-    maxBuffer: 64 * 1024 * 1024,
-    stdio: ["ignore", "pipe", "pipe"],
-  });
-}
+// Ephemeral-state files the reset owns; the build agent may never touch them
+// even though they're not in protected-paths.json (the weekly reset PR must
+// be able to change them and still pass the CI guardrail).
+const AGENT_EXTRA_DENIED = ["apps/web/lib/season.json"];
 
 function slugFromIssue(issue: WorkIssue): string {
   const m = issue.body.match(/\*\*Route slug:\*\* `([a-z0-9-]+)`/);
@@ -128,7 +124,7 @@ export async function buildFeature(issue: WorkIssue): Promise<BuildResult> {
       join(cloneDir, "constitution/CONSTITUTION.md"),
       "utf8",
     );
-    const patterns = loadProtectedPatterns(cloneDir);
+    const patterns = [...loadProtectedPatterns(cloneDir), ...AGENT_EXTRA_DENIED];
 
     const systemAppend = [
       "You are the autonomous build agent for 'Let's See What Happens', implementing one approved feature request.",
@@ -190,7 +186,7 @@ export async function buildFeature(issue: WorkIssue): Promise<BuildResult> {
     }
 
     // Model-independent guardrail check before anything leaves the machine.
-    const guard = checkClone(cloneDir);
+    const guard = checkClone(cloneDir, AGENT_EXTRA_DENIED);
     if (!guard.ok) {
       return { ok: false, reason: `Guardrail: ${guard.reason}`, costUsd: totalCost };
     }

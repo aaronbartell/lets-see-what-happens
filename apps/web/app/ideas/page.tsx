@@ -10,7 +10,8 @@ export default function IdeasPage() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">The playground</h1>
         <p className="text-zinc-500 mt-2">
-          Every idea the robot has built, ready to try.
+          This week&apos;s ideas, ready to try — until the reset on Sunday at
+          2am Central sweeps them away.
         </p>
       </div>
       <ul className="grid gap-3 sm:grid-cols-2">

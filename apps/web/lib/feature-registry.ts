@@ -1,7 +1,9 @@
-// The permanent log of features this app has grown.
+// The permanent log of features this app has grown THIS SEASON.
 //
 // The autonomous agent appends ONE entry here per shipped feature and never
 // removes or edits existing entries (Constitution, Article IV). Newest last.
+// Every Sunday at 2:00 AM Central the weekly reset wipes this back to the
+// seed entry — the all-time history lives on /features via GitHub issues.
 
 export type Feature = {
   slug: string; // route: /ideas/<slug>

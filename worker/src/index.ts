@@ -10,6 +10,7 @@ import {
 } from "./github.js";
 import { buildFeature } from "./build-feature.js";
 import { mergeWhenGreen } from "./merge.js";
+import { maybeReset } from "./reset.js";
 
 const SITE_URL = process.env.SITE_URL ?? "";
 
@@ -91,6 +92,11 @@ async function main() {
   await recoverStaleBuilds().catch((e) => log(`recover failed: ${e.message}`));
   // Sequential forever-loop: one build at a time, by design.
   for (;;) {
+    try {
+      await maybeReset();
+    } catch (err) {
+      log(`Reset check error: ${(err as Error).message}`);
+    }
     try {
       await processOne();
     } catch (err) {

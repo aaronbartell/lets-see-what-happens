@@ -21,6 +21,14 @@ export default function Home() {
           pull request, merge it, and ship it — no humans involved. Let&apos;s
           see what happens.
         </p>
+        <p className="text-sm text-zinc-500">
+          ⏳ Nothing lasts: every Sunday at 2am Central the playground resets
+          and the public&apos;s features are wiped. The{" "}
+          <Link href="/features" className="underline hover:text-fuchsia-500">
+            history
+          </Link>{" "}
+          is forever, though.
+        </p>
       </section>
 
       <section className="flex flex-col gap-3">

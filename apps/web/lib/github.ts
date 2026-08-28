@@ -75,6 +75,37 @@ export async function createFeatureIssue(input: {
   return { number: res.data.number, url: res.data.html_url };
 }
 
+export type ShippedFeature = {
+  number: number;
+  title: string;
+  url: string;
+  slug: string | null;
+  shippedAt: string; // ISO date
+};
+
+/** All-time history: every issue ever shipped, newest first. Never resets. */
+export async function listShippedFeatures(): Promise<ShippedFeature[]> {
+  const octokit = getOctokit();
+  const res = await octokit.rest.issues.listForRepo({
+    owner,
+    repo: name,
+    labels: "request,shipped",
+    state: "all",
+    per_page: 100,
+    sort: "created",
+    direction: "desc",
+  });
+  return res.data
+    .filter((i) => !i.pull_request)
+    .map((i) => ({
+      number: i.number,
+      title: i.title,
+      url: i.html_url,
+      slug: i.body?.match(/\*\*Route slug:\*\* `([a-z0-9-]+)`/)?.[1] ?? null,
+      shippedAt: i.closed_at ?? i.updated_at,
+    }));
+}
+
 export type RequestIssue = {
   number: number;
   title: string;

@@ -28,6 +28,9 @@ you → feature form → moderation + triage (Claude) → GitHub issue
   before they ever become issues.
 - The robot only adds: new routes under `/ideas`, one registry entry each.
   It cannot touch the pipeline that governs it.
+- **Nothing lasts.** Every Sunday at 2am Central the playground resets and the
+  public's features are wiped. The history (`/features` + the GitHub issues)
+  is permanent.
 
 Full text: [constitution/CONSTITUTION.md](constitution/CONSTITUTION.md)
 
