@@ -1,0 +1,16 @@
+{
+  "name": "lets-see-what-happens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A web app that builds itself from feature requests submitted by the internet.",
+  "scripts": {
+    "dev": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/web run build",
+    "typecheck": "npm --prefix apps/web run typecheck",
+    "worker:dev": "npm --prefix worker run dev",
+    "worker:build": "npm --prefix worker run build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

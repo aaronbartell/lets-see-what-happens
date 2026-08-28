@@ -1,0 +1,18 @@
+# Protected surface — see constitution/protected-paths.json (the enforced list).
+/constitution/ @aaronbartell
+/.github/ @aaronbartell
+/worker/ @aaronbartell
+/package.json @aaronbartell
+/vercel.json @aaronbartell
+/apps/web/package.json @aaronbartell
+/apps/web/next.config.ts @aaronbartell
+/apps/web/tsconfig.json @aaronbartell
+/apps/web/instrumentation-client.ts @aaronbartell
+/apps/web/app/layout.tsx @aaronbartell
+/apps/web/app/page.tsx @aaronbartell
+/apps/web/app/api/ @aaronbartell
+/apps/web/app/features/ @aaronbartell
+/apps/web/components/FeatureRequestForm.tsx @aaronbartell
+/apps/web/components/HeyVidiAd.tsx @aaronbartell
+/apps/web/lib/github.ts @aaronbartell
+/apps/web/lib/triage.ts @aaronbartell

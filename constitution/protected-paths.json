@@ -1,0 +1,22 @@
+{
+  "comment": "Single source of truth for files the autonomous agent may NEVER modify, rename, or delete. Consumed by: (1) the CI guardrail job (.github/scripts/guardrail.mjs), (2) the Railway worker's pre-push diff check, (3) the agent's tool-permission deny rules, and (4) the GitHub push ruleset (kept in sync by hand). Patterns ending in /** protect an entire directory; all other entries are exact file paths.",
+  "protected": [
+    "constitution/**",
+    ".github/**",
+    "worker/**",
+    "vercel.json",
+    "package.json",
+    "apps/web/package.json",
+    "apps/web/next.config.ts",
+    "apps/web/tsconfig.json",
+    "apps/web/instrumentation-client.ts",
+    "apps/web/app/layout.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/app/api/**",
+    "apps/web/app/features/**",
+    "apps/web/components/FeatureRequestForm.tsx",
+    "apps/web/components/HeyVidiAd.tsx",
+    "apps/web/lib/github.ts",
+    "apps/web/lib/triage.ts"
+  ]
+}
